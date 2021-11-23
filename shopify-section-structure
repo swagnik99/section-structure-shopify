@@ -1,0 +1,200 @@
+<style>
+   .content-center{
+    display: flex;
+    justify-content: center;
+     flex-direction:column;
+   }
+    .header-class{
+      margin: auto;
+  }
+   .smallimage-container{
+    display: flex;
+    justify-content: space-around;
+   }
+  .para-edit{
+    display: flex;
+    justify-content: center;
+  }
+  
+  
+</style>
+<div class="content-center">
+<img src="{{section.settings.section_image | img_url:'master'}}" class="header-class"  width="700" height="500">
+  <h1 class="header-class">{{section.settings.section_heading}}</h1>
+  
+  <div class="smallimage-container">
+     {% for block in section.blocks %}
+     {% if block.type == 'custom_newsmallimage'%}
+        <div>
+        <img src="{{block.settings.smallimage | img_url:'master'}}" class="header-class"  width="350" height="250">
+        <p class="para-edit"> {{block.settings.smallimagetext}} </p>
+      </div>
+     {%endif%}
+     {% endfor %}
+  </div>
+  <div class="smallimage-container">
+     {% for block in section.blocks %}
+     {% if block.type == 'custom_newbigimage'%}
+        <div>
+        <img src="{{block.settings.bigimage | img_url:'master'}}" class="header-class"  width="350" height="250">
+          <p class="para-edit"> <strong> {{block.settings.bigimagetextbold}} </strong> </p>
+          <p class="para-edit"> {{block.settings.bigimagetext}} </p>
+      </div>
+     {%endif%}
+     {% endfor %}
+  </div>
+  
+  
+  
+</div>
+{%comment%}
+<div class="content-center">
+  {% for block in section.blocks %}
+   {% if block.type == 'custom' %}
+   <h1 class="header-class">{{block.settings.block_text}}</h1>
+  {%endif%}
+  {% if block.type == 'custom_newimage' %}
+  <img src="{{block.settings.bigimage | img_url:'master'}}" class="header-class"  width="700" height="500">
+  {%endif%}
+  <div class="header-class smallimage-container">
+    {% for block in section.blocks %}
+        {% if block.type == 'custom_newsmallimage' %}
+
+      <div>
+        <img src="{{block.settings.smallimage | img_url:'master'}}" class="header-class"  width="350" height="250">
+        <p> {{block.settings.smallimagetext}} </p>
+      </div>
+     {%endif%} 
+    {%endfor%}
+  </div>
+  
+  {%endfor%}
+</div>
+{%endcomment%}
+{%comment%}
+<div class="custom">
+  {% for block in section.blocks %}
+  {% if block.type == 'custom'%}
+  <p>{{block.settings.block_text}}</p>
+  {%endif%}
+  {% endfor %}
+</div>
+<div class="custom-new">
+  {% for block in section.blocks %}
+  {% if block.type == 'custom_new'%}
+  <p>{{block.settings.paragraph}}</p>
+  {%endif%}
+  {% endfor %}
+</div>
+{%endcomment%}
+
+{% schema %}
+  {
+    "name": "Section New",
+    "settings": [
+		{
+          "type": "text",
+          "id": "section_heading",
+          "label": "Section Heading",
+          "default": "Quick links"
+        },
+        {
+          "type": "image_picker",
+          "id": "section_image",
+          "label": "Section Heading"
+      
+        }
+
+    ],
+	"max_blocks": 5,
+	"blocks": [
+       	{
+         "name": "Custom",
+         "type": "custom",
+         "settings": [
+           {
+              "type": "text",
+              "id": "block_text",
+              "label": "Text",
+              "default": "Block links"
+           }
+         ]
+        },
+       {
+         "name": "Custom Paragraph",
+         "type": "custom_new",
+         "settings": [
+           {
+              "type": "richtext",
+              "id": "paragraph",
+              "label": "Paragraph"
+            }
+
+         ]
+        },
+        {
+         "name": "Custom image",
+         "type": "custom_newimage",
+         "settings": [
+           {
+              "type": "image_picker",
+              "id": "bigimage",
+              "label": "bigimage"
+           }
+         ]
+        },
+         {
+         "name": "Custom smallimage",
+         "type": "custom_newsmallimage",
+         "settings": [
+           {
+              "type": "image_picker",
+              "id": "smallimage",
+              "label": "smallimage"
+           },
+            {
+              "type": "text",
+              "id": "smallimagetext",
+              "label": "smallimagetext"
+           }
+         ]
+        },
+              {
+         "name": "Custom bigimage",
+         "type": "custom_newbigimage",
+         "settings": [
+           {
+              "type": "image_picker",
+              "id": "bigimage",
+              "label": "bigimage"
+           },
+            {
+              "type": "text",
+              "id": "bigimagetext",
+              "label": "bigimagetext"
+            },
+			 {
+              "type": "text",
+              "id": "bigimagetextbold",
+              "label": "bigimagetextbold"
+            }
+         ]
+        }
+     ],
+     
+	"presets": [{
+		"name": "Section New",
+        "blocks": [
+                {
+                  "type": "custom"
+                },
+                {
+                  "type": "custom_new"
+                },
+                {
+                  "type": "custom_newimage"
+                }
+              ]
+	}]
+  }
+{% endschema %}
